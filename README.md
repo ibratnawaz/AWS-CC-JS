@@ -2,24 +2,6 @@
 
 Angular version: ~12.
 
-Repo maintainers:
-
-- [Sergey Gultyayev](https://github.com/gultyaev)
-
-## The purpose
-
-The repository was created to have an Angular version of e-shop for EPAM NodeJS AWS course. At the same time we strive to make this repository follows best practices so it may be used as a starter for new projects with all the necessary toolings already set up.
-
-## NodeJS AWS course integration
-
-All the necessary API endpoints are in the environments files `environment.ts` (for dev builds). Also it contains feature flags to enable/disable endpoints invocations from within the app so to ensure that you don't get errors for not implemented API endpoints.
-
-## Contribution
-
-Create an issue with the detailed description of the improvement/issue.
-
-If you would like to help implementing some feature, you should ask the maintainers for approval so to ensure that the feature is desired in the repository and no efforts go wasted.
-
 ## Get up and running
 
 Prerequisites: NodeJS v14
@@ -29,3 +11,35 @@ Follow the steps:
 - git clone
 - npm i
 - ng serve
+
+## Task Completion links
+
+#### Manual Deployment
+
+Website hosted on S3 with public access:
+- https://angular-shopping-bucket.s3.ap-south-1.amazonaws.com/
+- CloudFront distribution created for the above s3 bucket: https://d25nm8kse8xp3m.cloudfront.net/
+
+***Note**: This web app can be access from any of the S3 or cloudfront url.*
+
+<hr />
+
+Website hosted on S3 but public access is not provided:
+- https://cloudfront-shopping-app.s3.ap-south-1.amazonaws.com/index.html
+  - you will get access denied message.
+- CloudFront distribution created for the above s3 bucket:
+  - https://d1bstkh2r0etz1.cloudfront.net/
+
+***Note** This web app can be access from cloudfront url only.*
+
+<hr />
+
+### Automated Deployment
+
+After cloning the app, run the following script to automatically deploy the
+web app to AWS S3.
+
+- ng build
+- npm run serverless:deploy
+
+URL generated after automated deployment using serverless:
