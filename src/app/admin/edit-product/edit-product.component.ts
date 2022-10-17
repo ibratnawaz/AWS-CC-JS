@@ -3,21 +3,21 @@ import {
   Component,
   OnDestroy,
   OnInit,
-} from '@angular/core';
+} from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+} from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
 
-import { BehaviorSubject, Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs'
+import { finalize, takeUntil } from 'rxjs/operators'
 
-import { Product } from '../../products/product.interface';
-import { ProductsService } from '../../products/products.service';
-import { NotificationService } from '../../core/notification.service';
+import { Product } from '../../products/product.interface'
+import { ProductsService } from '../../products/products.service'
+import { NotificationService } from '../../core/notification.service'
 
 @Component({
   selector: 'app-edit-product',
@@ -26,26 +26,26 @@ import { NotificationService } from '../../core/notification.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditProductComponent implements OnInit, OnDestroy {
-  form: FormGroup;
-  productId: string | null = null;
-  requestInProgress = false;
+  form: FormGroup
+  productId: string | null = null
+  requestInProgress = false
 
-  loaded$ = new BehaviorSubject(false);
+  loaded$ = new BehaviorSubject(false)
 
   get countCtrl(): AbstractControl {
-    return this.form.get('count') as AbstractControl;
+    return this.form.get('count') as AbstractControl
   }
   get descriptionCtrl(): AbstractControl {
-    return this.form.get('description') as AbstractControl;
+    return this.form.get('description') as AbstractControl
   }
   get priceCtrl(): AbstractControl {
-    return this.form.get('price') as AbstractControl;
+    return this.form.get('price') as AbstractControl
   }
   get titleCtrl(): AbstractControl {
-    return this.form.get('title') as AbstractControl;
+    return this.form.get('title') as AbstractControl
   }
 
-  private readonly onDestroy$: Subject<void> = new Subject();
+  private readonly onDestroy$: Subject<void> = new Subject()
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -59,15 +59,15 @@ export class EditProductComponent implements OnInit, OnDestroy {
       description: ['', Validators.required],
       price: ['', Validators.required],
       count: ['', Validators.required],
-    });
+    })
   }
 
   ngOnInit(): void {
-    const productId = this.activatedRoute.snapshot.paramMap.get('productId');
+    const productId = this.activatedRoute.snapshot.paramMap.get('productId')
 
     if (!productId) {
-      this.loaded$.next(true);
-      return;
+      this.loaded$.next(true)
+      return
     }
 
     this.productsService
@@ -78,37 +78,37 @@ export class EditProductComponent implements OnInit, OnDestroy {
       )
       .subscribe((product) => {
         if (product) {
-          this.form.patchValue(product);
-          this.productId = product.id;
+          this.form.patchValue(product)
+          this.productId = product.productsId
         }
-      });
+      })
   }
 
   ngOnDestroy(): void {
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
+    this.onDestroy$.next()
+    this.onDestroy$.complete()
   }
 
   editProduct(): void {
-    const product: Product = this.form.value;
+    const product: Product = this.form.value
     if (!product) {
-      return;
+      return
     }
 
     const editProduct$ = this.productId
       ? this.productsService.editProduct(this.productId, product)
-      : this.productsService.createNewProduct(product);
+      : this.productsService.createNewProduct(product)
 
-    this.requestInProgress = true;
+    this.requestInProgress = true
     editProduct$.subscribe(
       () => this.router.navigate(['../'], { relativeTo: this.activatedRoute }),
       (error: unknown) => {
-        console.warn(error);
-        this.requestInProgress = false;
+        console.warn(error)
+        this.requestInProgress = false
         this.notificationService.showError(
           `Failed to ${this.productId ? 'edit' : 'create'} product`
-        );
+        )
       }
-    );
+    )
   }
 }

@@ -44,7 +44,8 @@ export class ProductsService extends ApiService {
         .get<Product[]>('/assets/products.json')
         .pipe(
           map(
-            (products) => products.find((product) => product.id === id) || null
+            (products) =>
+              products.find((product) => product.productsId === id) || null
           )
         )
     }
@@ -73,7 +74,9 @@ export class ProductsService extends ApiService {
     }
 
     return this.getProducts().pipe(
-      map((products) => products.filter((product) => ids.includes(product.id)))
+      map((products) =>
+        products.filter((product) => ids.includes(product.productsId))
+      )
     )
   }
 }
