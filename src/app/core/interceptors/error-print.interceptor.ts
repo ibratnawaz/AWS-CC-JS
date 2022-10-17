@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { NotificationService } from '../notification.service';
-import { tap } from 'rxjs/operators';
+} from '@angular/common/http'
+import { Observable } from 'rxjs'
+import { NotificationService } from '../notification.service'
+import { retry, tap } from 'rxjs/operators'
 
 @Injectable()
 export class ErrorPrintInterceptor implements HttpInterceptor {
@@ -18,16 +18,17 @@ export class ErrorPrintInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
+      retry(3),
       tap({
         error: () => {
-          const url = new URL(request.url);
+          const url = new URL(request.url)
 
           this.notificationService.showError(
             `Request to "${url.pathname}" failed. Check the console for the details`,
             0
-          );
+          )
         },
       })
-    );
+    )
   }
 }

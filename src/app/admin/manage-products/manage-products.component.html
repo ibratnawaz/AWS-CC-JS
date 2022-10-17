@@ -20,9 +20,7 @@
 <table class="w-100" [dataSource]="products$" mat-table>
   <ng-container matColumnDef="from">
     <th mat-header-cell *matHeaderCellDef>Title</th>
-    <td mat-cell *matCellDef="let product">
-      {{ product.title }}
-    </td>
+    <td mat-cell *matCellDef="let product">{{ product.title }}</td>
   </ng-container>
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef>Description</th>
@@ -30,9 +28,7 @@
   </ng-container>
   <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef>Price</th>
-    <td mat-cell *matCellDef="let product">
-      {{ product.price | number: "1.2-2" | currency }}
-    </td>
+    <td mat-cell *matCellDef="let product">{{ product.price | currency }}</td>
   </ng-container>
   <ng-container matColumnDef="count">
     <th mat-header-cell *matHeaderCellDef>Count</th>
@@ -45,7 +41,7 @@
         class="text-uppercase mr-2"
         color="primary"
         mat-flat-button
-        [routerLink]="product.id"
+        [routerLink]="product.productsId"
       >
         manage
       </button>

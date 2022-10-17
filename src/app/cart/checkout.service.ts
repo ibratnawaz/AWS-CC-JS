@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { CartService } from './cart.service';
-import { ProductsService } from '../products/products.service';
-import { Observable } from 'rxjs';
-import { ProductCheckout } from '../products/product.interface';
-import { map, switchMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core'
+import { CartService } from './cart.service'
+import { ProductsService } from '../products/products.service'
+import { Observable } from 'rxjs'
+import { ProductCheckout } from '../products/product.interface'
+import { map, switchMap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +21,14 @@ export class CheckoutService {
           map((products) =>
             products.map((product) => ({
               ...product,
-              orderedCount: cart[product.id],
-              totalPrice: +(cart[product.id] * product.price).toFixed(2),
+              orderedCount: cart[product.productsId],
+              totalPrice: +(cart[product.productsId] * product.price).toFixed(
+                2
+              ),
             }))
           )
         )
       )
-    );
+    )
   }
 }
