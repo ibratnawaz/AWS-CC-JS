@@ -4,8 +4,8 @@ export interface Product {
   description: string
   id: string
   price: number
-  title: string
-  productsId: string
+  title: string,
+  thumbnail: string;
 }
 
 export interface ProductCheckout extends Product {

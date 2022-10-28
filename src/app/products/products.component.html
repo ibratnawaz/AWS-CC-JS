@@ -5,4 +5,5 @@
     [index]="i"
   >
   </app-product-item>
+  <h3 *ngIf="!(products$ | async)?.length">No products. Please add some.</h3>
 </main>

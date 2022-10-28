@@ -2,27 +2,27 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { Config } from './config.interface'
+import { Config } from './config.interface';
 
 export const environment: Config = {
   production: false,
   apiEndpoints: {
-    products: 'https://qlb8qzz86f.execute-api.ap-south-1.amazonaws.com',
-    product: 'https://qlb8qzz86f.execute-api.ap-south-1.amazonaws.com',
+    products: 'https://5w6f3x0etb.execute-api.ap-south-1.amazonaws.com',
+    product: 'https://5w6f3x0etb.execute-api.ap-south-1.amazonaws.com',
     order: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
-    import: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
-    bff: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+    import: 'https://jwia7ettz7.execute-api.ap-south-1.amazonaws.com',
+    bff: 'https://5w6f3x0etb.execute-api.ap-south-1.amazonaws.com',
     cart: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
   },
   apiEndpointsEnabled: {
     products: true,
     product: true,
     order: false,
-    import: false,
+    import: true,
     bff: true,
     cart: false,
   },
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

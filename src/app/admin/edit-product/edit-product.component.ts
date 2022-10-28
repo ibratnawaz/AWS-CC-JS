@@ -59,6 +59,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
       description: ['', Validators.required],
       price: ['', Validators.required],
       count: ['', Validators.required],
+      thumbnail: ['']
     })
   }
 
@@ -79,7 +80,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
       .subscribe((product) => {
         if (product) {
           this.form.patchValue(product)
-          this.productId = product.productsId
+          this.productId = product.id
         }
       })
   }
