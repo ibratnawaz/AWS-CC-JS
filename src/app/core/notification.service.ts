@@ -13,10 +13,14 @@ export class NotificationService {
    * @param text Error text message
    * @param duration Duration to close after. 0 to close manually only
    */
-  showError(text: string, duration = 3000) {
+  showError(text: string, duration = 5000) {
     this.snackBar.open(text, 'Dismiss', {
       duration,
       panelClass: 'shop-snackbar-error',
     });
+  }
+
+  showSuccess(text: string, duration = 10000) {
+    this.snackBar.open(text, 'Dismiss', { duration });
   }
 }
