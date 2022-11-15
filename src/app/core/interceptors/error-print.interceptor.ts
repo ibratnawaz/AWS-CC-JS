@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-} from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { NotificationService } from '../notification.service'
-import { retry, tap } from 'rxjs/operators'
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { NotificationService } from '../notification.service';
+import { retry, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorPrintInterceptor implements HttpInterceptor {
@@ -20,15 +20,21 @@ export class ErrorPrintInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(3),
       tap({
-        error: () => {
-          const url = new URL(request.url)
-
+        error: (e) => {
+          const url = new URL(request.url);
+          console.log(e.status, e.error.message);
+          let message = '';
+          if (e.status === 401) {
+            message = `You are not authorized to perform this action.`;
+          } else {
+            message = `Request to "${url.pathname}" failed.`;
+          }
           this.notificationService.showError(
-            `Request to "${url.pathname}" failed. Check the console for the details`,
+            `${message} Check the console for more details.`,
             0
-          )
+          );
         },
       })
-    )
+    );
   }
 }
