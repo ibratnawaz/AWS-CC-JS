@@ -24,7 +24,7 @@ export class ErrorPrintInterceptor implements HttpInterceptor {
           const url = new URL(request.url);
           console.log(e.status, e.error.message);
           let message = '';
-          if (e.status === 401) {
+          if (e.status === 401 || e.status === 403) {
             message = `You are not authorized to perform this action.`;
           } else {
             message = `Request to "${url.pathname}" failed.`;
