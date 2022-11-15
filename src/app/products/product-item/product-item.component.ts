@@ -30,6 +30,9 @@ export class ProductItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.product.thumbnail == 'undefined') {
+      this.product.thumbnail = '';
+    }
     this.countInCart$ = this.cartService.cart$.pipe(
       map((cart) => {
         if (!(this.id in cart)) {

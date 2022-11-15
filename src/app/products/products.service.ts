@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { EMPTY, Observable, of, throwError } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Product } from './product.interface';
@@ -19,7 +19,7 @@ export class ProductsService extends ApiService {
       return EMPTY;
     }
 
-    const url = this.getUrl('bff', 'products');
+    const url = this.getUrl('bff', 'products/create');
     return this.http.post<Product>(url, product);
   }
 
@@ -49,7 +49,7 @@ export class ProductsService extends ApiService {
         );
     }
 
-    const url = this.getUrl('bff', `products/${id}`);
+    const url = this.getUrl('product', `products/${id}`);
     return this.http
       .get<{ product: Product }>(url)
       .pipe(map((resp) => resp.product));
@@ -63,8 +63,10 @@ export class ProductsService extends ApiService {
       return this.http.get<Product[]>('/assets/products.json');
     }
 
-    const url = this.getUrl('bff', 'products');
-    return this.http.get<Product[]>(url);
+    const url = this.getUrl('products', 'products');
+    return this.http
+      .get<Product[]>(url)
+      .pipe(map((resp: any) => resp.products));
   }
 
   getProductsForCheckout(ids: string[]): Observable<Product[]> {

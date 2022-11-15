@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../notification.service';
-import { tap } from 'rxjs/operators';
+import { retry, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorPrintInterceptor implements HttpInterceptor {
@@ -18,12 +18,19 @@ export class ErrorPrintInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
+      retry(3),
       tap({
-        error: () => {
+        error: (e) => {
           const url = new URL(request.url);
-
+          console.log(e.status, e.error.message);
+          let message = '';
+          if (e.status === 401 || e.status === 403) {
+            message = `You are not authorized to perform this action.`;
+          } else {
+            message = `Request to "${url.pathname}" failed.`;
+          }
           this.notificationService.showError(
-            `Request to "${url.pathname}" failed. Check the console for the details`,
+            `${message} Check the console for more details.`,
             0
           );
         },
